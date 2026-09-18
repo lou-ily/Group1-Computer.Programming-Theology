@@ -1,5 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="logo-title logo-description">
-  <title id="logo-title">The Augustinian Sanctuary</title>
-  <desc id="logo-description">The Augustinian Sanctuary logo.</desc>
-  <image href="logo.png" x="0" y="0" width="512" height="512" preserveAspectRatio="xMidYMid meet" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">The Augustinian Sanctuary</title>
+  <desc id="desc">A custom logo for The Augustinian Sanctuary featuring a heart, cross, and laurel leaves.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f8f5ef"/>
+      <stop offset="100%" stop-color="#e7eee7"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#e4ca8a"/>
+      <stop offset="100%" stop-color="#b98d42"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#6d8a72"/>
+      <stop offset="100%" stop-color="#536957"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="236" fill="url(#bg)" stroke="#536957" stroke-width="12"/>
+  <circle cx="256" cy="256" r="205" fill="none" stroke="#c7a86b" stroke-width="4" stroke-dasharray="2 12"/>
+
+  <g fill="url(#green)" stroke="#536957" stroke-width="5" stroke-linejoin="round">
+    <path d="M150 356c-32-17-54-45-62-80 26 6 46 20 60 43 16-27 35-45 64-59-3 42-22 75-62 96Z"/>
+    <path d="M362 356c32-17 54-45 62-80-26 6-46 20-60 43-16-27-35-45-64-59 3 42 22 75 62 96Z"/>
+  </g>
+
+  <g>
+    <path d="M256 126c-14 0-28 7-35 18-8-11-21-18-35-18-26 0-48 20-48 46 0 51 51 83 83 118 32-35 83-67 83-118 0-26-22-46-48-46Z" fill="#fff" stroke="#536957" stroke-width="8"/>
+    <path d="M250 176h12v44h44v12h-44v44h-12v-44h-44v-12h44z" fill="url(#gold)"/>
+  </g>
+
+  <path d="M150 390h212" stroke="#c7a86b" stroke-width="8" stroke-linecap="round"/>
+  <text x="256" y="434" text-anchor="middle" font-size="30" font-family="Georgia, 'Times New Roman', serif" font-weight="700" fill="#536957" letter-spacing="1.5">AUGUSTINIAN</text>
+  <text x="256" y="465" text-anchor="middle" font-size="20" font-family="Arial, sans-serif" font-weight="600" fill="#69716c" letter-spacing="4">SANCTUARY</text>
 </svg>
