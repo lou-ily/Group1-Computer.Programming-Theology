@@ -1,0 +1,2686 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Augustinian Sanctuary</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f5ef;
+    color: #292d2b;
+    overflow: hidden;
+}
+
+h1, h2, h3 {
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+button {
+    cursor: pointer;
+}
+
+.journey {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.journey::-webkit-scrollbar {
+    display: none;
+}
+
+.page {
+    min-width: 100vw;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 100px 7% 80px;
+    scroll-snap-align: start;
+    background: #f8f5ef;
+}
+
+.navbar {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 94%;
+    max-width: 1200px;
+    z-index: 1000;
+    background: rgba(255,255,255,0.92);
+    padding: 10px;
+    border-radius: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    border: none;
+    background: none;
+    color: #536957;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.nav-links {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.nav-links button {
+    border: none;
+    background: transparent;
+    padding: 8px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #69716c;
+}
+
+.nav-links button:hover,
+.nav-links button.active {
+    background: #879b86;
+    color: white;
+}
+
+.menu {
+    display: none;
+    border: none;
+    background: #536957;
+    color: white;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+}
+
+.progress {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border: none;
+    border-radius: 50%;
+    background: #ccd4cd;
+}
+
+.dot.active {
+    width: 22px;
+    background: #536957;
+}
+
+.btn {
+    border: none;
+    background: #536957;
+    color: white;
+    padding: 13px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.btn:hover {
+    background: #405342;
+}
+
+.secondary {
+    background: transparent;
+    color: #536957;
+    border: 1px solid #879b86;
+}
+
+.secondary:hover {
+    background: #e7eee7;
+}
+
+.arrows {
+    position: fixed;
+    right: 20px;
+    bottom: 55px;
+    z-index: 999;
+}
+
+.arrows button {
+    border: none;
+    background: white;
+    color: #536957;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-left: 5px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.eyebrow {
+    color: #c7a86b;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+h1 {
+    color: #536957;
+    font-size: clamp(45px, 7vw, 90px);
+}
+
+h2 {
+    color: #536957;
+    font-size: clamp(35px, 5vw, 60px);
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-family: Georgia, serif;
+    color: #526e76;
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.lead {
+    color: #69716c;
+    line-height: 1.7;
+    max-width: 700px;
+}
+
+.home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 50px;
+}
+
+.home-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle {
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, white, #dfcda5, #879b86);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    color: #536957;
+}
+
+.people {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.person {
+    background: white;
+    padding: 15px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.person:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+.person-picture {
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.person-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.person p {
+    color: #69716c;
+    font-size: 17px;
+    line-height: 1.5;
+    margin-top: 5px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.card p {
+    color: #69716c;
+    line-height: 1.7;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 30px;
+}
+
+.mission {
+    display: grid;
+    gap: 15px;
+}
+
+.timeline {
+    display: grid;
+    gap: 12px;
+}
+
+.timeline-item {
+    background: white;
+    padding: 18px;
+    border-left: 3px solid #c7a86b;
+    border-radius: 0 15px 15px 0;
+}
+
+.timeline-item strong {
+    color: #c7a86b;
+}
+
+.timeline-item p {
+    color: #69716c;
+    margin-top: 5px;
+    line-height: 1.5;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.gallery-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover {
+    transform: translateY(-5px);
+}
+
+.gallery-picture {
+    height: 180px;
+    overflow: hidden;
+}
+
+.gallery-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .gallery-picture img {
+    transform: scale(1.05);
+}
+
+.gallery-text {
+    padding: 18px;
+}
+
+.gallery-text p {
+    color: #69716c;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 7px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(0,0,0,0.65);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    background: #f8f5ef;
+    padding: 25px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close {
+    float: right;
+    border: none;
+    background: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+}
+
+.modal-picture {
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.modal-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gospel {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.gospel-card {
+    background: white;
+    padding: 50px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.gospel-card h3 {
+    color: #536957;
+    margin: 15px;
+}
+
+.verse {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    line-height: 1.6;
+    margin: 20px;
+}
+
+.date {
+    color: #69716c;
+}
+
+.gospel-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.gospel-list button {
+    border: 1px solid #879b86;
+    background: white;
+    color: #536957;
+    padding: 9px 12px;
+    border-radius: 20px;
+}
+
+.reflection-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 25px;
+}
+
+.members {
+    display: grid;
+    gap: 8px;
+}
+
+.member-button {
+    border: none;
+    padding: 12px;
+    background: white;
+    color: #536957;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.member-button.active {
+    background: #536957;
+    color: white;
+}
+
+.reflection {
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.reflection-verse {
+    font-family: Georgia, serif;
+    font-size: 25px;
+    color: #536957;
+    margin: 20px 0;
+}
+
+.reflection p {
+    color: #69716c;
+    line-height: 1.8;
+}
+
+.prayer-box {
+    max-width: 650px;
+    margin: auto;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    color: #536957;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d4dad4;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+.private-note {
+    background: #e7eee7;
+    color: #536957;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.dares {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 30px;
+}
+
+.category-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.category {
+    border: 1px solid #879b86;
+    background: white;
+    color: #536957;
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+
+.category.active {
+    background: #536957;
+    color: white;
+}
+
+.dare-area {
+    background: white;
+    border-radius: 25px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.dare-card {
+    background: #f1f4ef;
+    padding: 35px;
+    border-radius: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+}
+
+.dare-card h3 {
+    color: #536957;
+    font-size: 28px;
+    margin: 12px 0;
+}
+
+.dare-card p {
+    color: #69716c;
+    line-height: 1.6;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.contact-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+}
+
+.avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#879b86,#8da7ad);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.contact-card p {
+    color: #69716c;
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.instagram {
+    display: inline-block;
+    margin-top: 10px;
+    color: #526e76;
+    font-weight: bold;
+}
+
+.data-types {
+    margin-top: 30px;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+}
+
+.data-card {
+    background: white;
+    padding: 18px;
+    border-radius: 15px;
+}
+
+.data-card h3 {
+    color: #536957;
+    margin-bottom: 10px;
+}
+
+.data-card p {
+    color: #69716c;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.closing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(135deg,#f8f5ef,#e7eee7);
+}
+
+.closing-content {
+    max-width: 800px;
+}
+
+.closing p {
+    color: #69716c;
+    line-height: 1.8;
+    margin: 20px auto;
+}
+
+.teachers {
+    color: #536957;
+    font-size: 14px;
+    line-height: 1.7;
+    margin-top: 32px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.3);
+}
+@media(max-width: 900px) {
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 55px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 10px;
+        border-radius: 15px;
+        flex-direction: column;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .menu {
+        display: block;
+    }
+
+    .home,
+    .about-grid,
+    .dares,
+    .reflection-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .home-art {
+        display: none;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .contact-grid,
+    .data-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .people {
+        grid-template-columns: 1fr;
+    }
+
+    .person-picture {
+        height: 100px;
+    }
+
+    .page {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+@media(max-width: 550px) {
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .gospel-card {
+        padding: 25px;
+    }
+
+    .verse {
+        font-size: 20px;
+    }
+
+    .dare-area {
+        padding: 25px;
+    }
+
+}
+
+
+/* GROUP REFLECTION BOXES */
+
+.group-reflection-options {
+    display: flex;
+    gap: 20px;
+    margin: 25px 0;
+    width: 100%;
+}
+
+.group-reflection-box {
+    flex: 1;
+    min-height: 95px;
+    padding: 22px 25px;
+    border: 1px solid #ddd;
+    border-radius: 18px;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.group-reflection-box span {
+    display: block;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    font-weight: bold;
+    color: #435c4b;
+}
+
+.group-reflection-box small {
+    display: block;
+    margin-top: 8px;
+    color: #888;
+    font-size: 13px;
+}
+
+.group-reflection-box:hover,
+.group-reflection-box.active {
+    border-color: #536b5a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 700px) {
+    .group-reflection-options {
+        flex-direction: column;
+    }
+}
+
+
+/* GROUP REFLECTION — FIXED LAYOUT AND CLICK-TO-REVEAL */
+.group-reflection-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+.group-reflection-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 0;
+    width: 100%;
+}
+
+.group-reflection-box {
+    width: 100%;
+    min-height: 95px;
+}
+
+.group-reflection-content {
+    display: none;
+}
+
+.group-reflection-content.show {
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .group-reflection-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .group-reflection-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .group-reflection-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <button class="logo" onclick="goToPage(0)">
+        The Augustinian Sanctuary
+    </button>
+
+    <button class="menu" id="menuButton">
+        ☰
+    </button>
+
+    <div class="nav-links" id="navLinks">
+
+        <button data-page="0">Home</button>
+        <button data-page="1">About</button>
+        <button data-page="2">Gallery</button>
+        <button data-page="3">Gospel</button>
+        <button data-page="4">Reflections</button>
+        <button data-page="5">Prayer</button>
+        <button data-page="6">Dares</button>
+        <button data-page="7" id="groupReflectionNav">Group Reflection</button>
+        <button data-page="7">Contact</button>
+        <button data-page="8">Closing</button>
+
+    </div>
+
+</nav>
+
+<div class="progress" id="progress"></div>
+
+<div class="arrows">
+    <button onclick="previousPage()">←</button>
+    <button onclick="nextPage()">→</button>
+</div>
+
+<main class="journey" id="journey">
+
+<section class="page home">
+
+    <div>
+
+        <div class="eyebrow">An Augustinian Sanctuary</div>
+
+        <h1>The Augustinian<br>Sanctuary</h1>
+
+        <p class="subtitle">Searching Hearts, Finding Faith</p>
+
+        <p class="lead">
+            Welcome to a peaceful digital space about faith, reflection,
+            prayer, and acts of love. Explore the journey of Saint Augustine
+            and discover ways to reflect on your own journey with God.
+        </p>
+
+        <button class="btn" onclick="goToPage(1)">
+            Begin Our Journey →
+        </button>
+
+        <div class="people">
+
+            <div class="person" tabindex="0" role="button" aria-label="Open Saint Augustine profile">
+                <div class="person-picture">
+                    <img src="https://sfcatholic.org/bishopsbulletin/wp-content/uploads/2020/01/St.-Augustine.jpg" alt="Saint Augustine">
+                </div>
+
+                <h3>Saint Augustine</h3>
+
+                <p>
+                    A bishop and Christian thinker known for his search
+                    for truth and his journey toward God.
+                </p>
+            </div>
+
+            <div class="person" tabindex="0" role="button" aria-label="Open Saint Monica profile">
+                <div class="person-picture">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHWAL43xr__oEA4MENXUM4RLcwo8gUxb48inOnVlm3e2mc-SG0G09Osorf&s=10" alt="Saint Monica">
+                </div>
+
+                <h3>Saint Monica</h3>
+
+                <p>
+                    Augustine's mother, remembered for her faith,
+                    love, and persistent prayers.
+                </p>
+            </div>
+
+            <div class="person" tabindex="0" role="button" aria-label="Open Patricius profile">
+                <div class="person-picture">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Saint_Patrick_Catholic_Church_%28Junction_City%2C_Ohio%29_-_stained_glass%2C_Saint_Patrick_-_detail.jpg/330px-Saint_Patrick_Catholic_Church_%28Junction_City%2C_Ohio%29_-_stained_glass%2C_Saint_Patrick_-_detail.jpg?utm_source=simple.wikipedia.org&utm_campaign=parser&utm_content=thumbnail" alt="Patricius">
+                </div>
+
+                <h3>Patricius</h3>
+
+                <p>
+                    Augustine's father, who later became Christian
+                    near the end of his life.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="home-art">
+        <div class="circle">✝</div>
+    </div>
+
+</section>
+
+
+<section class="page">
+
+    <div class="eyebrow">The Beginning</div>
+
+    <h2>About Our Journey</h2>
+
+    <p class="lead">
+        Faith is a journey of questions, discoveries, struggles,
+        prayer, and moments of grace.
+    </p>
+
+    <br>
+
+    <div class="about-grid">
+
+        <div class="mission">
+
+            <div class="card">
+
+                <div class="eyebrow">Mission</div>
+
+                <h3>Growing Through Faith</h3>
+
+                <br>
+
+                <p>
+                    Our mission is to help people reflect on their faith,
+                    learn from Saint Augustine, pray, and practice simple
+                    acts of kindness and faith.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <div class="eyebrow">Vision</div>
+
+                <h3>A Meaningful Digital Space</h3>
+
+                <br>
+
+                <p>
+                    We envision a digital space where people can pause,
+                    reflect, pray, learn, and grow in their relationship with God.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div>
+
+            <h3>Saint Augustine's Journey</h3>
+
+            <br>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+                    <strong>354 — Early Life</strong>
+                    <p>
+                        Augustine was born in Thagaste in North Africa
+                        and developed a strong love for learning.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>Family — Monica & Patricius</strong>
+                    <p>
+                        His mother Monica was a devoted Christian,
+                        while his father Patricius followed a different
+                        religious path before becoming Christian later.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>Search — Searching for Truth</strong>
+                    <p>
+                        Augustine spent years exploring philosophy,
+                        ideas, and different ways of understanding truth.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>386 — Conversion</strong>
+                    <p>
+                        After a long spiritual search, Augustine
+                        experienced a profound conversion to Christianity.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>395 — Bishop of Hippo</strong>
+                    <p>
+                        Augustine became bishop of Hippo and devoted
+                        himself to teaching, writing, and serving others.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>Legacy</strong>
+                    <p>
+                        His writings became highly influential in
+                        Christian thought and philosophy.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <button class="btn" onclick="goToPage(2)">
+        Continue →
+    </button>
+
+</section>
+
+
+<section class="page">
+
+    <div class="eyebrow">Art & Reflection</div>
+
+    <h2>Faith Gallery</h2>
+
+    <p class="lead">
+        Explore reflections connected to Saint Augustine,
+        faith, truth, prayer, and grace.
+    </p>
+
+    <br>
+
+    <div class="gallery">
+
+        <div class="gallery-card" onclick="openGallery(0)">
+
+            <div class="gallery-picture">
+                <img src="https://thumbs.dreamstime.com/b/artistic-design-visualizing-insomnia-struggle-darkness-restless-mind-405906884.jpg" alt="The Restless Heart">
+            </div>
+
+            <div class="gallery-text">
+                <h3>The Restless Heart</h3>
+                <p>
+                    A reflection on humanity's search for peace and God.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-card" onclick="openGallery(1)">
+
+            <div class="gallery-picture">
+                <img src="https://images.stockcake.com/public/0/3/b/03b9a1c0-10e7-434b-b0f9-7f940b3c746b_large/journey-toward-light-stockcake.jpg" alt="A Path Toward Truth">
+            </div>
+
+            <div class="gallery-text">
+                <h3>A Path Toward Truth</h3>
+                <p>
+                    Inspired by Augustine's journey of searching.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-card" onclick="openGallery(2)">
+
+            <div class="gallery-picture">
+                <img src="https://davidmcelroy.org/wp-content/uploads/2020/07/Light-inside-heart.jpg" alt="Light Within">
+            </div>
+
+            <div class="gallery-text">
+                <h3>Light Within</h3>
+                <p>
+                    A representation of spiritual awakening.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="gallery-card" onclick="openGallery(3)">
+
+            <div class="gallery-picture">
+                <img src="https://static.vecteezy.com/system/resources/previews/059/555/011/non_2x/mother-and-son-mom-embrace-her-child-their-faces-aglow-with-love-eyes-closed-encapsulating-eternal-bond-in-a-moment-of-serene-affection-mother-s-day-vector.jpg" alt="A Mother's Prayer">
+            </div>
+
+            <div class="gallery-text">
+                <h3>A Mother's Prayer</h3>
+                <p>
+                    Inspired by Saint Monica's faithful prayers.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <button class="btn" onclick="goToPage(3)">
+        Continue to Gospel →
+    </button>
+
+</section>
+
+
+<section class="page">
+
+    <div class="gospel">
+
+        <div class="eyebrow">Pause & Listen</div>
+
+        <h2>Daily Gospel</h2>
+
+        <p class="lead" style="margin:auto;">
+            Take a moment to slow down and reflect on God's message.
+        </p>
+
+        <br>
+
+        <div class="gospel-list" id="gospelList"></div>
+
+        <div class="gospel-card">
+
+            <div class="eyebrow">Today's Gospel</div>
+
+            <h3 id="gospelReference"></h3>
+
+            <div class="verse" id="gospelVerse"></div>
+
+            <div class="date" id="gospelDate"></div>
+
+            <button class="btn" onclick="nextGospel()">
+                Refresh Today's Gospel
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="page">
+
+    <div class="eyebrow">Listen to the Heart</div>
+
+    <h2>Faithful Bible Reflections</h2>
+
+    <p class="lead">
+        Explore sample Bible reflections from different group members.
+    </p>
+
+    <br>
+
+    <div class="reflection-layout">
+
+        <div class="members" id="members"></div>
+
+        <div class="reflection">
+
+            <div class="eyebrow" id="reflectionName"></div>
+
+            <div class="reflection-verse" id="reflectionVerse"></div>
+
+            <strong id="reflectionReference"></strong>
+
+            <br><br>
+
+            <p id="reflectionText"></p>
+
+            <br>
+
+            <p>
+                <strong>Takeaway:</strong>
+                <span id="reflectionTakeaway"></span>
+            </p>
+
+        </div>
+
+    </div>
+
+    <button class="btn" onclick="goToPage(5)">
+        Continue to Prayer →
+    </button>
+
+</section>
+
+
+<section class="page">
+
+    <div class="eyebrow">A Place to Pray</div>
+
+    <h2>Prayer Requests</h2>
+
+    <p class="lead">
+        You may submit a prayer request privately. Your request will be
+        sent to our Google Form and will not appear on this website.
+    </p>
+
+    <br>
+
+    <div class="prayer-box">
+
+        <h3>Submit a Private Prayer</h3>
+
+        <br>
+
+        <div class="private-note">
+            Your prayer request will not be displayed in a public prayer list.
+            Only the creators who manage the Google Form can view the submitted responses.
+        </div>
+
+        <iframe
+            name="hiddenGoogleForm"
+            id="hiddenGoogleForm"
+            style="display:none;">
+        </iframe>
+
+        <form
+            id="prayerForm"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSdzF1mUBAwBVKu0ZaEEepcuBaXEvjom4hZXgXPQwN9m5Gf0EA/formResponse"
+            method="POST"
+            target="hiddenGoogleForm">
+
+            <div class="form-group">
+
+                <label for="name">Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="entry.727006861"
+                    placeholder="Enter your name"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="prayer">Prayer Request</label>
+
+                <textarea
+                    id="prayer"
+                    name="entry.1393113939"
+                    placeholder="Write your prayer request..."
+                    required>
+                </textarea>
+
+            </div>
+
+            <button class="btn" type="submit">
+                Send Prayer Request
+            </button>
+
+        </form>
+
+        <p
+            id="prayerMessage"
+            style="margin-top:15px;color:#536957;">
+        </p>
+
+    </div>
+
+</section>
+
+
+<section class="page">
+
+    <div class="eyebrow">Faith in Action</div>
+
+    <h2>Dares of Grace</h2>
+
+    <p class="subtitle">
+        Small acts of faith. Big acts of love.
+    </p>
+
+    <p class="lead">
+        Choose whether your dare is for yourself or for someone else.
+        Then roll the card to receive a random challenge.
+    </p>
+
+    <br>
+
+    <div class="dares">
+
+        <div class="card">
+
+            <h3>Choose a Category</h3>
+
+            <div class="category-buttons">
+
+                <button
+                    class="category active"
+                    data-category="myself">
+                    For Myself
+                </button>
+
+                <button
+                    class="category"
+                    data-category="others">
+                    For Others
+                </button>
+
+            </div>
+
+            <p>
+                <strong>For Myself</strong>
+                focuses on prayer, gratitude, and personal reflection.
+            </p>
+
+            <br>
+
+            <p>
+                <strong>For Others</strong>
+                focuses on kindness, service, and encouraging others.
+            </p>
+
+        </div>
+
+
+        <div class="dare-area">
+
+            <div class="eyebrow">Your Grace Challenge</div>
+
+            <div class="dare-card">
+
+                <small id="dareCategory">YOUR DARE</small>
+
+                <h3 id="dareTitle">
+                    Roll the card to begin.
+                </h3>
+
+                <p id="dareDescription">
+                    A random act of faith will appear here.
+                </p>
+
+            </div>
+
+            <button class="btn" onclick="rollDare()">
+                Roll the Card
+            </button>
+
+            <button
+                class="btn secondary"
+                id="completeButton"
+                onclick="completeDare()"
+                disabled>
+                Completed
+            </button>
+
+            <p id="dareMessage"></p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="page">
+
+    <div class="eyebrow">The Collective's Reflection</div>
+
+    <h2>Group Reflection</h2>
+
+    <p class="lead">
+        The group's realization after creating this project.
+    </p>
+
+    <br>
+
+    <div class="group-reflection-layout">
+
+        <div class="group-reflection-options" id="groupReflectionMembers">
+
+            <button
+                class="group-reflection-box"
+                onclick="showGroupReflection(0)">
+                <span>Our Realization</span>
+                <small>Click to reveal</small>
+            </button>
+
+            <button
+                class="group-reflection-box"
+                onclick="showGroupReflection(1)">
+                <span>What We Learned</span>
+                <small>Click to reveal</small>
+            </button>
+
+        </div>
+
+        <div class="reflection group-reflection-content" id="groupReflectionContent" aria-live="polite">
+
+            <div class="eyebrow" id="groupReflectionTitle"></div>
+
+            <div class="reflection-verse" id="groupReflectionQuote"></div>
+
+            <strong id="groupReflectionReference"></strong>
+
+            <br><br>
+
+            <p id="groupReflectionText"></p>
+
+            <br>
+
+            <p>
+                <strong>Realization:</strong>
+                <span id="groupReflectionTakeaway"></span>
+            </p>
+
+        </div>
+
+    </div>
+
+    <button class="btn" onclick="goToPage(8)">
+        Continue to Contact →
+    </button>
+
+</section>
+
+
+<section class="page">
+
+    <div class="eyebrow">The People Behind the Journey</div>
+
+    <h2>Contact Us</h2>
+
+    <p class="lead">
+        The people behind the website. Below are their profiles aswell as their contact.
+    </p>
+
+    <br>
+
+    <div class="contact-grid">
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t1.15752-9/786241647_4305653503080440_1118089572606201447_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=102&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGcZG0qwqZaf5cZIMVZprxRQbXtDwggVH1Bte0PCCBUfe2BIJF9EnZiBzBVBgwl0cAaL80U91OjmxhINyzYhGtF&_nc_ohc=zSRT193VyvMQ7kNvwGzcXz7&_nc_oc=Adr1K03OA00Ff1kLrqMSBG3U08eVUbE-a2YMImiMsC7dQ5Bgv21WCYUl6aq048tdd3s&_nc_zt=23&_nc_ht=scontent.fmnl8-2.fna&_nc_ss=7b2a8&oh=03_Q7cD6AGrOkO006N9-xBdtsPTz8a42eUbw9kMSEPtFbNpxyJtYg&oe=6AB674F1" alt="Ryan Jacob Gatchalian">
+            </div>
+            <h3>Ryan Jacob Gatchalian</h3>
+            <h6><i>Leader</i></h6>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+                Proverbs 18:15 "The heart of the discerning acquires knowledge, for the ears of the wise seek it out""
+                <br><br>
+                <strong>Birthday:</strong><br>
+                November 2008
+            </p>
+            <a class="facebook" href="https://www.facebook.com/iamjacob.sg" target="_blank">
+    @Ryan Jacob Gatchalian↗
+</a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t1.15752-9/785677562_1548249453437063_8706437193787272260_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeH5TRkIyrZSqbRrksDM-ORch8E4t7VBnimHwTi3tUGeKeKLkrYQujD5Jy_nj6rVWNKdE2jMJEMt21aIzINv0Ifx&_nc_ohc=ydBdjOVFNwwQ7kNvwH4J8LM&_nc_oc=Adp7vM6OFBtJyneJ7P97ZoeAO8r2viTaWIymYC7QA9Xq-JrqOTnNHL7Q9eqkmmFTPJ4&_nc_zt=23&_nc_ht=scontent.fmnl8-2.fna&_nc_ss=7b2a8&oh=03_Q7cD6AHGn9Mi_NqT19K-90lD1qvILTQedwxbUgLqe14HbaD83w&oe=6AB661A6" alt="Althea Louise Jimenez">
+            </div>
+            <h3>Althea Louise Jimenez</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+               Joshua 1:9 "Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go."
+                <br><br>
+                <strong>Birthday:</strong><br>
+                January 16, 2009
+            </p>
+            <a class="facebook" href="https://www.facebook.com/louily" target="_blank">
+                @Althea Louise Jimenez↗
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-5.fna.fbcdn.net/v/t1.15752-9/784540567_1454664282786477_7065541438443771093_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFaLmR2cvbkMfq-Nuv6IZEw6nVAUC029nTqdUBQLTb2dGjBuje8ieuU8SPw3M3gYOkXv_9nfhzSU-wv7sI-N2hO&_nc_ohc=gV1NAtBkvR4Q7kNvwHlOjU_&_nc_oc=Adrm04Ay5OvjQoWgDHKwnpwsO7bHZkDXZFZfSMzu8hypTMMPe6FaLEVVy3w81rPjkss&_nc_zt=23&_nc_ht=scontent.fmnl8-5.fna&_nc_ss=7b2a8&oh=03_Q7cD6AE1N_GrVSy6nbIew7AR3r-tCg7mXo_hHpxjNfa1aPK3Gg&oe=6AB670F8" alt="Nathan Reign Nazareno">
+            </div>
+            <h3>Nathan Reign Nazareno</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+               “ The Lord is close to the brokenhearted and saves those who are crushed in spirit.” -Psalm 34:18
+                <br><br>
+                <strong>Birthday:</strong><br>
+                November 28, 2008
+            </p>
+            <a class="facebook" href="https://www.facebook.com/profile.php?id=61583945550797" target="_blank">
+                @Nathan Reign↗
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-5.fna.fbcdn.net/v/t1.15752-9/786030608_1792751208572450_8944038233252476032_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFWAJRhD15ynKY9LMYA6b7TpXeE-mxK7oeld4T6bEruh4jvgTNUfk7G8Wrry4Lzg8CGQ2ipbebp1uZkIIy6Mtwu&_nc_ohc=cOCBJ_yDELMQ7kNvwEH9Xud&_nc_oc=Adru6EH1I47LRBOwt6X5IoadpOMpaWMmeUYp1xS0yqrrGy46koN8bgoIDYch0UVj9U8&_nc_zt=23&_nc_ht=scontent.fmnl8-5.fna&_nc_ss=7b2a8&oh=03_Q7cD6AFyFa5TJaCNU9BZqtGOhr66OgB6u4UjcoMpK3LseH7Ybw&oe=6AB67D3A" alt="Matthew Gabriel Olan">
+            </div>
+            <h3>Matthew Gabriel Olan</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+               “Commit your work to the Lord, and your plans will be established” - Proverbs 16:3
+                <br><br>
+                <strong>Birthday:</strong><br>
+                May 23, 2009
+            </p>
+            <a class="facebook" href="https://www.facebook.com/matthew.gabriel.olan.2024" target="_blank">
+                @Matthew Gabriel Olan↗
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-1.fna.fbcdn.net/v/t1.15752-9/784540567_1855422485612437_7027511718986368691_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=104&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGWo30jwYvB4x135ENPquj45VPzPqgTdlPlU_M-qBN2U0HnRPUwSSIid3aN4j7xX_9U5gAZucT6rqif6JSzKzww&_nc_ohc=T8AnenleKJUQ7kNvwHLB2EB&_nc_oc=AdqFCGOQzgkSE488LkWAjuDA-FaiAuX8mpoq5HlT4dWndoxmQwE9V4HDsItGSvSGk4Y&_nc_zt=23&_nc_ht=scontent.fmnl8-1.fna&_nc_ss=7b2a8&oh=03_Q7cD6AG5GjKaHTHVADhkrGB13gfRMOcfkmh1vp70-zyDxs_tQw&oe=6AB66FD3" alt="Francis Sanchez">
+            </div>
+            <h3>Francis Sanchez</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+                 Matthew 6:22 "The eye is the lamp of the body. If your eyes are healthy, your whole body will be full of light."
+                <br><br>
+                <strong>Birthday:</strong><br>
+                November 26, 2008
+            </p>
+            <a class="facebook" href="https://www.facebook.com/profile.php?id=61580112562500" target="_blank">
+                @Franz Sanchez↗
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-1.fna.fbcdn.net/v/t1.15752-9/785145374_4411579322489385_6872555989248953541_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGRMk4mCwV7XZix7DLFh34aPd9MWEDAXmI930xYQMBeYhaUP1FNo0SKMkz6BQxm3archLpF_NiUVuHNxEEAGLiW&_nc_ohc=InYUgzIvoQMQ7kNvwF0wQQi&_nc_oc=Adqyta3ls_73-YIAk6-OOQ1wQXPLoVssqN_yQaKBIm4WkoaFwxzmJ1xcIh8U-fK-LBE&_nc_zt=23&_nc_ht=scontent.fmnl8-1.fna&_nc_ss=7b2a8&oh=03_Q7cD6AGFX_1l4KxLdDB54CErr78gSZaXycKD7miHD-ENppI57A&oe=6AB6541A" alt="Bsean Caleb Santiago">
+            </div>
+            <h3>Bsean Caleb Santiago</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+                “My grace is sufficient for you.” 2 Corinthians 12:9
+                <br><br>
+                <strong>Birthday:</strong><br>
+                
+            </p>
+            <a class="facebook" href="https://www.facebook.com/profile.php?id=61576737056765" target="_blank">
+                @Sean Santiago↗
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-5.fna.fbcdn.net/v/t1.15752-9/783588718_930000739546511_8843018289224990866_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeG6w5NEIX1xjBWZUc8-arhX8lS6lUPMiSzyVLqVQ8yJLJBTp-zkI2huJpZMREXjamUqm5FnpYw7erHSFkHOeBdS&_nc_ohc=pii7c8pTB0MQ7kNvwFqJJHY&_nc_oc=Adr3ORnkPSHvw1nYGZwTqC-i3mn1g2qTo3sNfKhuCKKACynAPrCa-2bvpmaxuxBtuz0&_nc_zt=23&_nc_ht=scontent.fmnl8-5.fna&_nc_ss=7b2a8&oh=03_Q7cD6AGM1dVX0VAygU7TYvbZKKtsQ7am_IQqaNzSZVimbkbSWQ&oe=6AB660DB" alt="Railen Lee Torres">
+            </div>
+            <h3>Railen Lee Torres</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+                James 1:19-20: “Be quick to listen, slow to speak, and slow to anger, for human anger does not accomplish God's righteousness.” 
+                <br><br>
+                <strong>Birthday:</strong><br>
+                July 21, 2008
+            </p>
+            <a class="facebook" href="https://www.facebook.com/railen.torres.2024" target="_blank">
+                @Railen Torres↗
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t1.15752-9/785279564_1055209553816381_8304839710226374190_n.jpg?stp=dst-jpg_tt6&cstp=mx1746x1164&ctp=s1746x1164&_nc_cat=100&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeEr1HJYHPbXvwHAHQfVZA5Y2xlwSeQvehHbGXBJ5C96ETLpzHJU-pBXQmXVyd8KzlSvAUIbYI5mJkhS3Jd6VlVV&_nc_ohc=i4b7c-WkwRgQ7kNvwEOhDxY&_nc_oc=AdrlmdJDLfuTFye1TMpNRPbFw6Ii7fa-THTB7KQ-HT2gpBn6BRNiYPSOyIUF383xj0U&_nc_zt=23&_nc_ht=scontent.fmnl8-2.fna&_nc_ss=7b2a8&oh=03_Q7cD6AGjp2iAMJscvVKURGOtz6O8J038Ypr3Di7wpUfOH0mWRw&oe=6AB65667" alt="Monroe Daveson Zapata">
+            </div>
+            <h3>Monroe Daveson Zapata</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+                “I can do all things through Christ who strengthens me.” — Philippians 4:13
+                <br><br>
+                <strong>Birthday:</strong><br>
+                October 26, 2009
+            </p>
+            <a class="facebook" href="https://www.facebook.com/search/top?q=monroe%20zapata" target="_blank">
+                @Monroe Daveson Zapata↗
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="avatar">
+                <img src="https://scontent.fmnl8-6.fna.fbcdn.net/v/t1.15752-9/744198591_1728301655160775_7248102050141594233_n.jpg?stp=dst-jpg_tt6&cstp=mx720x890&ctp=s720x890&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeF_vGMP_-QsSLkYHlF4OhMKexV-K6533Ah7FX4rrnfcCOBsaJH6jyoqBfcMgNiOFCMjZNRa7BL9wuke8-YADeLo&_nc_ohc=C89dGO66eXoQ7kNvwEyQOVL&_nc_oc=AdpZkN01O858VGqBGxJlj0T-0LaL2fODi9wnmZIP4gfenfZQ3aTnQau9ZLQkkm_HMTk&_nc_zt=23&_nc_ht=scontent.fmnl8-6.fna&_nc_ss=7b2a8&oh=03_Q7cD6AEv1g7ouw80pQdjX1bLXs2dVSlOOjQQtbzZj_TZXuqgYg&oe=6AB66DA6" alt="John Pablo Galman">
+            </div>
+            <h3>John Pablo Galman</h3>
+            <br>
+            <p>
+                <strong>Favorite Bible Verse:</strong><br>
+               “The Lord will fight for you; you need only to be still” - Exodus 14:14
+                <br><br>
+                <strong>Birthday:</strong><br>
+                January 1, 2009
+            </p>
+            <a class="facebook" href="https://www.facebook.com/johnpablo.galman" target="_blank">
+                @John Pablo Galman↗
+            </a>
+        </div>
+
+    </div>
+
+
+    <div class="data-types">
+
+        <h3>C# Data Types Behind Our Features</h3>
+
+        <br>
+
+        <div class="data-grid">
+
+            <div class="data-card">
+                <h3>Dares of Grace</h3>
+                <p>
+                    Dare Title — string<br>
+                    Description — string<br>
+                    Category — string<br>
+                    Completed — bool<br>
+                    Date Completed — DateTime
+                </p>
+            </div>
+
+            <div class="data-card">
+                <h3>Prayer Requests</h3>
+                <p>
+                    Name — string<br>
+                    Prayer Request — string<br>
+                    Date Submitted — DateTime<br>
+                    Prayer Answered — bool
+                </p>
+            </div>
+
+            <div class="data-card">
+                <h3>Daily Bible Verse</h3>
+                <p>
+                    Bible Verse — string<br>
+                    Scripture Reference — string<br>
+                    Date of the Day — DateTime
+                </p>
+            </div>
+
+        </div>
+
+        <p class="lead" style="font-size:13px;margin-top:15px;">
+            The current website uses JavaScript for its working front-end.
+            These are the corresponding data types that could be used when
+            implementing the system using C#.
+        </p>
+
+    </div>
+
+    <button class="btn" onclick="goToPage(8)">
+        Continue to Closing →
+    </button>
+
+</section>
+
+
+<section class="page closing">
+
+    <div class="closing-content">
+
+        <div class="eyebrow">The Journey Continues</div>
+
+        <h2>
+            Every step of faith is a step closer to God.
+        </h2>
+
+        <p>
+            Faith is a journey filled with prayer, reflection, service,
+            kindness, and grace. May every small act of love remind us
+            to continue walking with God.
+        </p>
+
+        <button class="btn" onclick="goToPage(0)">
+            ← Return to Home
+        </button>
+
+        <p class="teachers">
+            With guidance from<br>
+            Ma’am Joy Miranda and Sir Ven Santos<br>
+            We truly appreciate you both. May God bless you both always.
+        </p>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- GALLERY MODAL -->
+
+<div class="modal" id="galleryModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeGallery()">
+            ×
+        </button>
+
+        <div class="modal-picture">
+            <img
+                id="modalPicture"
+                src=""
+                alt="Gallery image">
+        </div>
+
+        <div class="eyebrow">
+            Faith Gallery
+        </div>
+
+        <h2 id="modalTitle" style="font-size:35px;"></h2>
+
+        <p class="lead" id="modalDescription"></p>
+
+        <br>
+
+        <p class="lead" id="modalMeaning"></p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+var journey = document.getElementById("journey");
+
+var pages = document.querySelectorAll(".page");
+
+var navButtons = document.querySelectorAll(".nav-links button");
+
+var currentPage = 0;
+
+var isProgrammaticScroll = false;
+
+
+function updateNavigation() {
+
+    var dots = document.querySelectorAll(".dot");
+
+    dots.forEach(function(dot, index) {
+
+        dot.classList.toggle(
+            "active",
+            index === currentPage
+        );
+
+    });
+
+    navButtons.forEach(function(button) {
+
+        button.classList.toggle(
+            "active",
+            Number(button.getAttribute("data-page")) === currentPage
+        );
+
+    });
+
+}
+
+
+function goToPage(number) {
+
+    if (number < 0) number = 0;
+
+    if (number >= pages.length) {
+        number = pages.length - 1;
+    }
+
+    currentPage = number;
+
+    isProgrammaticScroll = true;
+
+    journey.scrollTo({
+        left: pages[number].offsetLeft,
+        behavior: "smooth"
+    });
+
+    updateNavigation();
+
+    setTimeout(function() {
+        isProgrammaticScroll = false;
+    }, 500);
+
+}
+
+
+function nextPage() {
+
+    if (currentPage < pages.length - 1) {
+        goToPage(currentPage + 1);
+    }
+
+}
+
+
+function previousPage() {
+
+    if (currentPage > 0) {
+        goToPage(currentPage - 1);
+    }
+
+}
+
+
+navButtons.forEach(function(button) {
+
+    button.addEventListener("click", function() {
+
+        goToPage(
+            Number(button.getAttribute("data-page"))
+        );
+
+        document
+            .getElementById("navLinks")
+            .classList.remove("show");
+
+    });
+
+});
+
+
+document
+    .getElementById("menuButton")
+    .addEventListener("click", function() {
+
+        document
+            .getElementById("navLinks")
+            .classList.toggle("show");
+
+    });
+
+
+var progress = document.getElementById("progress");
+
+for (var i = 0; i < pages.length; i++) {
+
+    var dot = document.createElement("button");
+
+    dot.className = "dot";
+
+    dot.setAttribute("data-number", i);
+
+    dot.addEventListener("click", function() {
+
+        goToPage(
+            Number(this.getAttribute("data-number"))
+        );
+
+    });
+
+    progress.appendChild(dot);
+
+}
+
+
+journey.addEventListener("scroll", function() {
+
+    if (isProgrammaticScroll) return;
+
+    var number = Math.round(
+        journey.scrollLeft / window.innerWidth
+    );
+
+    if (number !== currentPage) {
+
+        currentPage = number;
+
+        updateNavigation();
+
+    }
+
+});
+
+
+/* HOME PAGE PEOPLE POPUP */
+
+var people = [
+    {
+        image: "https://sfcatholic.org/bishopsbulletin/wp-content/uploads/2020/01/St.-Augustine.jpg",
+        title: "Saint Augustine",
+        description: "A bishop and Christian thinker known for his search for truth and his journey toward God.",
+        meaning: "Augustine's life shows that doubt, questioning, and grace can all lead a person closer to faith."
+    },
+    {
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHWAL43xr__oEA4MENXUM4RLcwo8gUxb48inOnVlm3e2mc-SG0G09Osorf&s=10",
+        title: "Saint Monica",
+        description: "Augustine's mother, remembered for her faith, love, and persistent prayers.",
+        meaning: "Saint Monica reminds us that prayer, patience, and love can be powerful signs of trust in God's timing."
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Saint_Patrick_Catholic_Church_%28Junction_City%2C_Ohio%29_-_stained_glass%2C_Saint_Patrick_-_detail.jpg/330px-Saint_Patrick_Catholic_Church_%28Junction_City%2C_Ohio%29_-_stained_glass%2C_Saint_Patrick_-_detail.jpg?utm_source=simple.wikipedia.org&utm_campaign=parser&utm_content=thumbnail",
+        title: "Patricius",
+        description: "Augustine's father, who later became Christian near the end of his life.",
+        meaning: "Patricius reflects the hope that faith can grow and deepen, even in a life that was once uncertain."
+    }
+];
+
+function openPerson(number) {
+    var person = people[number];
+
+    document.getElementById("modalPicture").src = person.image;
+    document.getElementById("modalTitle").textContent = person.title;
+    document.getElementById("modalDescription").textContent = person.description;
+    document.getElementById("modalMeaning").textContent = person.meaning;
+    document.getElementById("galleryModal").classList.add("show");
+}
+
+document.querySelectorAll(".person").forEach(function(card, index) {
+    card.addEventListener("click", function() {
+        openPerson(index);
+    });
+
+    card.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPerson(index);
+        }
+    });
+});
+
+/* GALLERY DATA */
+
+var gallery = [
+
+    {
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe6F-oEdJzF-0MT28vYm2_t4148cFGVEM0zJzEl2r773kg3jW9HiG9l1mw&s=10",
+        title: "The Restless Heart",
+        description: "A reflection on Saint Augustine's search for peace, purpose, and a deeper relationship with God throughout his life.",
+        meaning: "Our hearts can continue searching for happiness, purpose, and peace. Like Saint Augustine, we may try to find fulfillment in different things, but true and lasting peace comes from knowing God and allowing Him to guide our lives."
+    },
+
+    {
+        image: "https://spaces-cdn.clipsafari.com/c9rr83abr6ox5icfyul9c2ffxlh2",
+        title: "A Path Toward Truth",
+        description: "A symbolic path representing Augustine's journey through questions, struggles, discoveries, and his search for truth and understanding.",
+        meaning: "Life is a journey filled with questions, doubts, and experiences that help us grow. Our questions do not always mean that we lack faith; instead, they can help us discover deeper truths and understand ourselves, others, and God better."
+    },
+
+    {
+        image: "https://www.redemptionofhumanity.org/wp-content/uploads/Christ_The_Consolator-e1612607847923.jpg",
+        title: "Light Within",
+        description: "A representation of Augustine's spiritual awakening and the moment when he began to see his life and faith in a new and meaningful way.",
+        meaning: "Spiritual awakening can bring a new sense of hope, purpose, and understanding. It reminds us that even when we make mistakes or feel lost, we can change our hearts, learn from our experiences, and begin again with a stronger faith."
+    },
+
+    {
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB7qhzciW22QqOk3KjUcQiofMFe6bcNAdKmr5XZtdjzoM4jPPsOjMMajA&s=10",
+        title: "A Mother's Prayer",
+        description: "Inspired by Saint Monica's faithful prayers, patience, and love as she continued to hope for Augustine's conversion and spiritual growth.",
+        meaning: "Saint Monica's prayers remind us that love requires patience, hope, and trust. Her example shows that we can continue praying for and supporting the people we care about, even when change does not happen immediately, while trusting that every journey has its own time."
+    }
+
+];
+
+
+function openGallery(number) {
+
+    var item = gallery[number];
+
+    document
+        .getElementById("modalPicture")
+        .src = item.image;
+
+    document
+        .getElementById("modalTitle")
+        .textContent = item.title;
+
+    document
+        .getElementById("modalDescription")
+        .textContent = item.description;
+
+    document
+        .getElementById("modalMeaning")
+        .textContent = item.meaning;
+
+    document
+        .getElementById("galleryModal")
+        .classList.add("show");
+
+}
+
+
+function closeGallery() {
+
+    document
+        .getElementById("galleryModal")
+        .classList.remove("show");
+
+}
+
+
+document
+    .getElementById("galleryModal")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+            closeGallery();
+        }
+
+    });
+
+
+/* GOSPEL */
+
+var gospels = [
+
+    {
+        reference: "Matthew 5:1–12",
+        verse: "“Blessed are the merciful, for they will be shown mercy.”"
+    },
+
+    {
+        reference: "John 15:9–12",
+        verse: "“Remain in my love and let love guide what you do.”"
+    },
+
+    {
+        reference: "Matthew 11:28–30",
+        verse: "“Come to me, all you who are weary, and I will give you rest.”"
+    },
+
+    {
+        reference: "John 14:27",
+        verse: "“Peace I leave with you; my peace I give you.”"
+    },
+
+    {
+        reference: "Matthew 22:37–39",
+        verse: "“Love God with all your heart and love your neighbor as yourself.”"
+    }
+
+];
+
+var gospelNumber = 0;
+
+
+function showGospel(number) {
+
+    document
+        .getElementById("gospelReference")
+        .textContent = gospels[number].reference;
+
+    document
+        .getElementById("gospelVerse")
+        .textContent = gospels[number].verse;
+
+    document
+        .getElementById("gospelDate")
+        .textContent =
+        new Date().toLocaleDateString(
+            undefined,
+            {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }
+        );
+
+}
+
+
+function nextGospel() {
+
+    gospelNumber++;
+
+    if (gospelNumber >= gospels.length) {
+        gospelNumber = 0;
+    }
+
+    showGospel(gospelNumber);
+
+}
+
+
+var gospelList =
+    document.getElementById("gospelList");
+
+
+gospels.forEach(function(gospel, index) {
+
+    var button = document.createElement("button");
+
+    button.textContent = gospel.reference;
+
+    button.onclick = function() {
+
+        gospelNumber = index;
+
+        showGospel(index);
+
+    };
+
+    gospelList.appendChild(button);
+
+});
+
+
+/* REFLECTIONS */
+
+var reflections = [
+
+    {
+        name: "Ryan Jacob Gatchalian",
+        verse: "“The heart of the discerning acquires knowledge, for the ears of the wise seek it out.”",
+        reference: "Proverbs 18:15",
+        text: "I confess that I have often been lazy and have allowed procrastination to control my actions. Instead of using the time and abilities God has entrusted to me wisely, I sometimes choose comfort and delay. I recognize that this is not only a failure of discipline but also a failure to properly steward the gifts and responsibilities God has given me. I ask for forgiveness and for the strength to become more diligent, responsible, and faithful in the things I am called to do.",
+        takeaway: "Reflecting on my confession, I realize that laziness and procrastination are not simply habits but choices that can affect my responsibilities and growth. There are times when I prioritize comfort over doing what needs to be done, even when I know I have the ability to accomplish it. This made me realize that the time and talents God has given me should not be wasted. Through this reflection, I am reminded to become more disciplined, responsible, and faithful in using my time wisely. I know change will not happen instantly, but I can begin by taking small steps and choosing to act instead of constantly putting things off.",
+        peta: "While creating the performance task, I realized and pondered about my confession as I was coding. It made me think deeply of the root of my laziness and procrastination, and how I can overcome it. So as the group and I move forward, we will carry the values and lessons that we have learned not only from this project but to every experience that we will face."
+    },
+
+    {
+        name: "Althea Louise Jimenez",
+        verse: "“Have I not commanded you? Be strong and courageous.”",
+        reference: "Joshua 1:9",
+        text: "I am confessing about forever living in doubt. I’ve always had this feeling of doubt about the people that enter my life. I think about them ending up leaving me in the end. Promising me that they’ll pull me away from the mess around my world. But this feeling of doubt will say otherwise. I often find myself questioning whether the people around me truly care about me or if they will eventually leave. Sometimes, even when someone shows me genuine kindness and support, I still have thoughts that make me doubt their intentions. I realize that this fear can prevent me from fully appreciating the relationships I have and from allowing myself to trust people. I know that I cannot control who stays or leaves, but I can control how I treat the people who are sincere with me. I want to learn to let go of my constant doubts and give people a chance instead of always expecting the worst.",
+        takeaway: "My confession helped me realize that my doubts often come from my fear of people leaving. I learned that I should learn to trust and appreciate those who genuinely stay. I also realized that constantly expecting people to leave can make me overlook the love and support they are giving me in the present. Not everyone who enters my life will hurt me or abandon me, and I should not let past fears determine how I treat people today. I learned that trust takes time and that it is okay to be vulnerable with people who have shown that they genuinely care. Instead of focusing on what might happen in the future, I should appreciate the people who choose to stay and make an effort to build healthier relationships with them.",
+        peta: "This PETA helped me express my feelings and understand myself better. It taught me the importance of honesty, self-reflection, and personal growth. While doing the activity, I was able to think about the things that I usually keep to myself and understand why I sometimes feel the way I do. It gave me a chance to reflect on my fears and doubts instead of simply ignoring them. I also realized that expressing my thoughts can help me understand myself more clearly and become more open to change. This PETA reminded me that personal growth takes time and that I should not be afraid to acknowledge the parts of myself that I still need to improve. It also taught me to appreciate the people around me and the experiences that help me become a better person."
+    },
+
+    {
+        name: "Nathan Reign Nazareno",
+        verse: "“The Lord is close to the brokenhearted and saves those who are crushed in spirit.”",
+        reference: "Psalm 34:18",
+        text: "I have sometimes judged other people too quickly. There have been moments when I focused on their mistakes or formed opinions about them without knowing what they were going through. I realized that I should be more understanding. I sometimes forget that I only see a small part of someone's life and that there may be reasons behind their actions that I do not understand. I know that everyone makes mistakes, including myself, and that judging someone without knowing their situation can be unfair and hurtful. I want to become more open-minded and patient when dealing with other people. Instead of immediately focusing on their faults, I want to take the time to understand them and remember that everyone is fighting their own battles.",
+        takeaway: "This confession made me realize that I don't always know what other people are experiencing, so I shouldn't be quick to judge them. Everyone has their own struggles and mistakes, including me. It reminded me to be more understanding and compassionate instead of focusing on the faults of others. I learned that showing compassion does not mean ignoring someone's mistakes, but understanding that everyone deserves patience and a chance to grow. I should also remember that I would not want other people to judge me based only on my mistakes or bad moments. This reflection encouraged me to listen more, understand people better, and think before making assumptions about someone. It reminded me that kindness and understanding can make a difference in how I treat the people around me.",
+        peta: "This PETA gave me the chance to look deep within myself and be honest about who I am. It made me realize how important self-reflection is, and helped me grow not just as a student, but as a person. It also encouraged me to recognize the things that I need to improve instead of avoiding them. Through this activity, I learned that understanding myself can help me understand other people better as well. It reminded me that everyone has different experiences, struggles, and perspectives, so I should be more patient and respectful toward them. This PETA became an opportunity for me to reflect on my actions and learn from my mistakes. I realized that personal growth does not happen immediately, but it begins when I am willing to acknowledge my weaknesses and make an effort to become better."
+    },
+
+    {
+        name: "Matthew Gabriel Olan",
+        verse: "“Commit your work to the Lord, and your plans will be established.”",
+        reference: "Proverbs 16:3",
+        text: "I realized that I've been neglecting my prayers lately. There are times when I get distracted or too caught up with other things, and I end up putting prayer aside. Sometimes I only turn to God when I need help. I also realize that there are moments when I become too focused on school, entertainment, or other responsibilities and forget to make time for God. I know that prayer should not only be something I do when I am facing problems or asking for something. It should also be a way for me to thank God, seek guidance, and strengthen my relationship with Him. I want to become more consistent with my prayers and make time for God even when life becomes busy. I also want to remember His presence not only when I need help, but during both good and difficult moments in my life.",
+        takeaway: "It made me realize that I have been neglecting my relationship with God, especially through my prayers. There were times when I became distracted by other things and forgot to make time for Him. Confessing my sins helped me acknowledge my mistakes instead of ignoring them. It reminded me that God is always willing to forgive me and give me another chance to do better. I also realized that my relationship with God needs effort and consistency, just like any other relationship that is important to me. Prayer should not only happen when I am struggling or asking for something, but should also be part of my everyday life. This reflection reminded me to slow down, make time for God, and be more grateful for His guidance and blessings.",
+        peta: "This PETA gave me an opportunity to reflect not only on the task itself but also on my relationship with God. While working on it, I realized that there are many things that can distract me from what is truly important. It reminded me that I should make time for prayer and reflection even when I have many responsibilities. I also learned that school activities can become meaningful when I use them as opportunities to learn more about myself and improve my character. This PETA encouraged me to be more responsible with my time and to remember God while working toward my goals. Overall, the experience reminded me that personal growth and faith should be part of my everyday life."
+    },
+
+    {
+        name: "Francis Sanchez",
+        verse: "“The eye is the lamp of the body.”",
+        reference: "Matthew 6:22",
+        text: "Lord, I confess that at times I have let my focus be drawn to things that do not nourish my soul. Sometimes I forget that you are the source of all light. I have allowed distractions, envy, and pride to cloud my eyes and my heart. Now I choose to turn my eyes back to you to set my sight on what is good, true, and pure. Cleanse my heart and my mind, so that my whole life may be filled with Your guidance and love. Amen. I also confess that there are moments when I compare myself to others and allow what I see to affect how I feel about myself. I sometimes become distracted by things that make me lose sight of what truly matters. I know that these distractions can take my attention away from God and from the blessings that are already present in my life. I want to learn to focus more on what is good and meaningful, while trusting God's guidance instead of allowing envy, pride, or comparison to control me.",
+        takeaway: "This confession reminded me of what I choose to look at and focus on. Matthew 6:22 teaches that our perspective on what we fix our eyes on determines the light in our lives. It made me realize that what I constantly focus on can influence my thoughts, decisions, and the way I see myself and others. If I continue focusing on things that bring negativity, comparison, or envy, I may lose sight of the things that truly matter. This reminded me to be more intentional with what I allow into my heart and mind. I should focus on things that help me grow, strengthen my faith, and bring me closer to God.",
+        peta: "This PETA reminds me that I need to improve myself and build myself stronger for my upcoming battles, and to take the path that God wants me to take. It also helped me understand that improvement requires me to recognize the things that distract me from becoming a better person. I learned that I need to be more careful about what I focus on because my thoughts and choices can affect the direction of my life. This activity encouraged me to strengthen my faith and remain focused on the goals and values that are important to me. It reminded me that difficult experiences can also become opportunities to grow and become stronger. Through this PETA, I realized that I should continue improving myself while trusting God's guidance and believing that He will lead me toward the right path."
+    },
+
+    {
+        name: "Bsean Caleb Santiago",
+        verse: "“My grace is sufficient for you.”",
+        reference: "2 Corinthians 12:9",
+        text: "I am deleting the habit of asking different people about their opinions before I trust my own judgment. I often look for other people's opinions because I am afraid that my own decisions might be wrong. Sometimes I depend too much on what others think instead of listening to myself and trusting my own judgment. I realize that asking for advice is not a bad thing, but constantly relying on other people can prevent me from becoming confident and responsible for my own choices. I want to learn how to trust myself more and accept that making mistakes is also part of growing. I need to understand that I cannot always make the perfect decision, but I can learn from the decisions that I make.",
+        takeaway: "I use other people as a shield because I am terrified of being responsible for my own mistakes. I realized that constantly depending on other people's opinions allows me to avoid facing the possibility of being wrong. It made me understand that I need to develop confidence in my own judgment and accept that mistakes are part of life. I should be willing to make decisions for myself and take responsibility for the results, whether they are good or bad. Through this reflection, I learned that trusting myself does not mean ignoring advice from others, but knowing when to listen to others and when to trust my own understanding.",
+        peta: "This PETA helped me realize that I should not always allow the opinions of other people to control the way I see myself or the decisions that I make. It gave me an opportunity to express my thoughts honestly and understand the importance of having confidence in myself. I learned that being judged is something that I cannot completely avoid, but I can choose how I respond to it. Instead of constantly worrying about what others might think, I should focus on making decisions that reflect my own values and beliefs. This activity reminded me that mistakes are part of learning and that I should not be afraid to take responsibility for my choices. It also encouraged me to become more confident and trust myself while still being open to advice from others."
+    },
+
+    {
+        name: "Railen Lee Torres",
+        verse: "“Be quick to listen, slow to speak, and slow to anger.”",
+        reference: "James 1:19-20",
+        text: "I am a man with a lot of strengths and weaknesses. The weakness that I always struggle with is my anger issues. This weakness has destroyed relationships throughout my life that cannot be fixed. There are times when I let my anger take control of my words and actions without thinking about the consequences. I sometimes react immediately when I am frustrated, and this can cause unnecessary arguments or hurt the people around me. I realize that anger is a natural emotion, but the way I respond to it is something that I need to learn to control. I do not want my anger to continue affecting my relationships or the way people see me. I want to become more patient, learn to communicate properly when I am upset, and think before reacting.",
+        takeaway: "Confessing my weakness made me realize that it is a major problem that can cause harm everywhere in my life. If I don’t learn to control my emotions and actions when filled with emotions, it will continue to harm my relationships with everybody I encounter. I also realized that anger can make me say or do things that I do not truly mean, and once those words or actions happen, they cannot always be taken back. This reflection helped me understand that controlling my anger does not mean ignoring my feelings, but learning how to handle them in a healthier way. I need to become more patient, listen before reacting, and give myself time to calm down before responding. I know changing this weakness will take time, but I can start by being more aware of my emotions and making better choices when I feel angry.",
+        peta: "Being able to speak about my weakness and its effects in my life reminded me to improve for the better. This PETA gave me the opportunity to be honest about a weakness that has affected different parts of my life. By reflecting on my actions, I became more aware of how my anger can affect the people around me and the relationships that I value. I realized that recognizing a problem is only the first step, and I also need to make an effort to change my behavior. The activity reminded me that improvement takes patience and that I cannot expect myself to change immediately. I need to continue working on controlling my emotions, listening more, and thinking before I react. Overall, this PETA encouraged me to become more self-aware and to use my experiences as motivation to become a better person."
+    },
+
+    {
+        name: "David Monroe Zapata",
+        verse: "“I can do all things through Christ who strengthens me.”",
+        reference: "Philippians 4:13",
+        text: "There are times when I feel pressured by school and become overwhelmed, especially when I have many requirements, activities, and deadlines to manage. Sometimes I become stressed because I feel like I have too many things to accomplish at the same time. When this happens, I may lose motivation or become anxious about whether I will be able to finish everything properly. I realize that I need to improve the way I manage my time instead of allowing pressure to control me. I also need to remember that asking for help and taking breaks when necessary does not mean that I am weak. I want to become more organized, responsible, and calm when dealing with school responsibilities, while trusting God to guide me through difficult moments.",
+        takeaway: "This confession made me realize that feeling pressured by school is normal, but I should learn how to handle it properly. I learned that becoming overwhelmed does not mean that I am incapable of accomplishing my responsibilities. Sometimes I put too much pressure on myself because I want everything to be done perfectly, which can make even simple tasks feel more difficult. I realized that managing my time, setting priorities, and taking things one step at a time can help me handle pressure better. I should also remember to trust God when things become difficult instead of allowing fear and stress to take control of my thoughts. This reflection reminded me that challenges are part of growth and that I can overcome them by staying patient, organized, and faithful.",
+        peta: "This PETA helped me understand that the struggles I experience in school can also teach me important lessons about myself. It showed me that I need to learn how to handle pressure instead of allowing it to overwhelm me. Through the activity, I was able to reflect on my weaknesses, recognize the things I need to improve, and think about how I can become more responsible with my time. I also learned that I do not have to face every challenge alone because I can trust God to guide and strengthen me. This experience reminded me that difficult situations can help me grow, become more patient, and develop better habits. I will carry these lessons with me as I continue facing new challenges in school and in life."
+    },
+
+    {
+        name: "John Pablo Galman",
+        verse: "“The Lord will fight for you; you need only to be still.”",
+        reference: "Exodus 14:14",
+        text: "I have been impatient and easily irritated with others. Sometimes I let small things affect my attitude and I don't always think about how my words or actions might make other people feel. I know I can be more patient and understanding, so I want to work on controlling my reactions. I also realize that there are times when I react without thinking and allow my emotions to control the way I treat other people. I sometimes become frustrated over small things and forget that everyone has their own struggles and feelings. I know that my actions and words can affect the people around me, even when I do not intend to hurt them. Because of this, I want to learn how to pause, think before I speak, and become more patient and understanding toward others.",
+        takeaway: "I realized that sometimes I take the blessings and people in my life for granted. I can become so focused on what I want or what is going wrong that I forget to appreciate what I already have. I also realized that sometimes I fail to show enough gratitude through my words and actions. I learned that I should not wait until something or someone is gone before I realize how important they are to me. I need to appreciate the people who continue to support me and recognize the blessings that God has given me, even during difficult times. This reminded me to be more grateful, express my appreciation more often, and value the people and opportunities that are already present in my life.",
+        peta: "While working on this PETA, I realized that it’s not enough to simply get the required tasks done; you must also carry them out with honesty toward yourself. This activity gave me the opportunity to reflect on my own actions, attitudes, and the things that I still need to improve. It made me understand that personal growth starts with being honest about your weaknesses and accepting that there are things that you can still change. I also learned that working with others requires patience, understanding, and cooperation. Through this PETA, I became more aware of myself and the importance of learning from my experiences instead of simply moving on from them. It reminded me that every activity can teach me something valuable if I take the time to reflect on it."
+    }
+
+];
+
+
+var members =
+    document.getElementById("members");
+
+
+reflections.forEach(function(reflection, index) {
+
+    var button = document.createElement("button");
+
+    button.className = "member-button";
+
+    button.textContent = reflection.name;
+
+    button.onclick = function() {
+        showReflection(index);
+    };
+
+    members.appendChild(button);
+
+});
+
+
+function showReflection(number) {
+
+    var item = reflections[number];
+
+    document
+        .getElementById("reflectionName")
+        .textContent = item.name;
+
+    document
+        .getElementById("reflectionVerse")
+        .textContent = item.verse;
+
+    document
+        .getElementById("reflectionReference")
+        .textContent = item.reference;
+
+    document
+        .getElementById("reflectionText")
+        .textContent = item.text;
+
+    document
+        .getElementById("reflectionTakeaway")
+        .textContent = item.takeaway;
+
+
+    document
+        .querySelectorAll(".member-button")
+        .forEach(function(button, index) {
+
+            button.classList.toggle(
+                "active",
+                index === number
+            );
+
+        });
+
+}
+
+
+/* PRAYER FORM */
+
+document
+    .getElementById("prayerForm")
+    .addEventListener("submit", function() {
+
+        document
+            .getElementById("prayerMessage")
+            .textContent =
+            "Your prayer request has been sent. Thank you for sharing it.";
+
+        setTimeout(function() {
+
+            document
+                .getElementById("prayerForm")
+                .reset();
+
+        }, 500);
+
+    });
+
+
+/* GROUP REFLECTIONS */
+
+var groupReflections = [
+    {
+        title: "Our Realization",
+        quote: "“Growth begins when we are willing to look honestly at ourselves.”",
+        reference: "The Collective's Reflection",
+        text: "As a group, this PETA gave us an opportunity to look deeper into ourselves and understand each other better. Through sharing our confessions and personal experiences, we realized that everyone has different struggles, weaknesses, and challenges that they are trying to overcome. It was meaningful to hear each other's thoughts because it showed us that we are not alone in facing difficulties. The activity encouraged us to be honest about ourselves and helped us understand the importance of accepting our weaknesses instead of hiding them. Working on the PETA also allowed us to experience the importance of teamwork. We had to communicate with each other, share ideas, divide responsibilities, and make sure that everyone was able to contribute. There were moments when we faced difficulties, but instead of giving up, we learned to cooperate and find ways to complete our work together. Through this experience, we became more understanding of each other's differences and learned that every member has an important role in the group.",
+        takeaway: "We realized that self-reflection is important because it helps us understand who we are and what we need to improve. We also realized that we should not judge people too quickly because everyone has their own experiences and struggles. This PETA reminded us to be more patient, understanding, and respectful toward others. We also realized that working as a group is not only about completing a requirement. It is about learning how to communicate, cooperate, and support one another. The experience showed us that when we work together and respect each other's contributions, we can overcome challenges more effectively. Overall, this PETA helped us grow not only as students but also as individuals and as a group."
+    },
+
+    {
+        title: "What We Learned",
+        quote: "“Self-reflection helps us understand who we are and who we can become.”",
+        reference: "The Collective's Reflection",
+        text: "Throughout this PETA, we learned many lessons about ourselves, our relationships with others, and our responsibilities. We learned that everyone has weaknesses that they need to work on, whether it involves anger, procrastination, self-doubt, pressure, judgment, or maintaining our relationship with God. Recognizing these weaknesses helped us understand that personal growth begins with being honest with ourselves. We also learned the importance of taking responsibility for our actions and decisions. Our choices can affect not only ourselves but also the people around us. Because of this, we learned that we should think before we act, be more considerate of others, and learn from our mistakes. We also learned that change does not happen instantly. It requires patience, consistency, effort, and the willingness to keep trying even when improvement is difficult. Most importantly, we learned that faith, teamwork, understanding, and self-awareness are important in our everyday lives. The lessons from this PETA can help us become more responsible students, better friends, and better individuals. We learned that our struggles do not have to define us because they can also become opportunities for us to grow.",
+        takeaway: "Our biggest realization is that we all have different stories and struggles, but we can still learn from one another. Listening to each other's experiences made us realize that we should be more compassionate and less judgmental. We learned that sometimes a person may be struggling with something that we know nothing about, which is why kindness and understanding are important. We also realized that the lessons we learned should not end when the PETA is finished. We need to apply them in our daily lives by becoming more patient, responsible, disciplined, grateful, and faithful. We realized that becoming a better person is a continuous process, and we will always have something new to learn and improve. In the end, this PETA taught us that growth starts with honesty. By accepting our weaknesses, learning from our experiences, and supporting one another, we can continue becoming better versions of ourselves. We will carry these lessons with us as we face new challenges and experiences in the future."
+    }
+];
+
+function showGroupReflection(number) {
+
+    var item = groupReflections[number];
+    var content = document.getElementById("groupReflectionContent");
+
+    document.getElementById("groupReflectionTitle").textContent = item.title;
+    document.getElementById("groupReflectionQuote").textContent = item.quote;
+    document.getElementById("groupReflectionReference").textContent = item.reference;
+    document.getElementById("groupReflectionText").textContent = item.text;
+    document.getElementById("groupReflectionTakeaway").textContent = item.takeaway;
+
+    content.classList.add("show");
+
+    document
+        .querySelectorAll("#groupReflectionMembers .group-reflection-box")
+        .forEach(function(button, index) {
+
+            button.classList.toggle(
+                "active",
+                index === number
+            );
+
+        });
+}
+
+/* DARES OF GRACE */
+
+var currentCategory = "myself";
+
+var currentDare = null;
+
+
+var dares = {
+
+    myself: [
+
+        {
+            category: "Prayer",
+            title: "A Quiet Moment",
+            description: "Spend a few quiet minutes in prayer."
+        },
+
+        {
+            category: "Gratitude",
+            title: "Gratitude List",
+            description: "Write down three things you are grateful for."
+        },
+
+        {
+            category: "Reflection",
+            title: "Reflect on Scripture",
+            description: "Read a Bible passage and reflect on its message."
+        },
+
+        {
+            category: "Gratitude",
+            title: "Thank God for Someone",
+            description: "Take a moment to thank God for someone important to you."
+        },
+
+        {
+            category: "Self-Reflection",
+            title: "Encourage Yourself",
+            description: "Write an encouraging message to yourself."
+        }
+
+    ],
+
+    others: [
+
+        {
+            category: "Kindness",
+            title: "Give a Compliment",
+            description: "Give someone a sincere compliment."
+        },
+
+        {
+            category: "Service",
+            title: "Help Someone",
+            description: "Help someone without expecting anything in return."
+        },
+
+        {
+            category: "Prayer",
+            title: "Pray for Someone",
+            description: "Pray for someone who may be struggling."
+        },
+
+        {
+            category: "Kindness",
+            title: "Send Encouragement",
+            description: "Send an encouraging message to a friend."
+        },
+
+        {
+            category: "Service",
+            title: "A Small Act of Kindness",
+            description: "Do a small act of kindness for someone today."
+        }
+
+    ]
+
+};
+
+
+var categoryButtons =
+    document.querySelectorAll(".category");
+
+
+categoryButtons.forEach(function(button) {
+
+    button.onclick = function() {
+
+        currentCategory =
+            button.getAttribute("data-category");
+
+
+        categoryButtons.forEach(function(otherButton) {
+
+            otherButton.classList.remove("active");
+
+        });
+
+
+        button.classList.add("active");
+
+        currentDare = null;
+
+
+        document
+            .getElementById("dareCategory")
+            .textContent = "YOUR DARE";
+
+
+        document
+            .getElementById("dareTitle")
+            .textContent = "Roll the card to begin.";
+
+
+        document
+            .getElementById("dareDescription")
+            .textContent =
+            "A random act of faith will appear here.";
+
+
+        document
+            .getElementById("completeButton")
+            .disabled = true;
+
+
+        document
+            .getElementById("dareMessage")
+            .textContent = "";
+
+    };
+
+});
+
+
+function rollDare() {
+
+    var list = dares[currentCategory];
+
+    var randomNumber =
+        Math.floor(Math.random() * list.length);
+
+    currentDare = list[randomNumber];
+
+
+    document
+        .getElementById("dareCategory")
+        .textContent = currentDare.category;
+
+
+    document
+        .getElementById("dareTitle")
+        .textContent = currentDare.title;
+
+
+    document
+        .getElementById("dareDescription")
+        .textContent = currentDare.description;
+
+
+    document
+        .getElementById("completeButton")
+        .disabled = false;
+
+
+    document
+        .getElementById("dareMessage")
+        .textContent = "";
+
+}
+
+
+function completeDare() {
+
+    if (currentDare === null) return;
+
+
+    var completed =
+        JSON.parse(
+            localStorage.getItem("completedDares")
+        ) || [];
+
+
+    completed.push({
+
+        title: currentDare.title,
+
+        description: currentDare.description,
+
+        category:
+            currentCategory === "myself"
+                ? "For Myself"
+                : "For Others",
+
+        completed: true,
+
+        dateCompleted:
+            new Date().toLocaleDateString()
+
+    });
+
+
+    localStorage.setItem(
+        "completedDares",
+        JSON.stringify(completed)
+    );
+
+
+    document
+        .getElementById("dareMessage")
+        .textContent =
+        "Dare completed and saved.";
+
+
+    document
+        .getElementById("completeButton")
+        .disabled = true;
+
+}
+
+
+/* KEYBOARD NAVIGATION */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "ArrowRight") {
+        nextPage();
+    }
+
+    if (event.key === "ArrowLeft") {
+        previousPage();
+    }
+
+    if (event.key === "Escape") {
+        closeGallery();
+    }
+
+});
+
+
+/* INITIALIZE */
+
+showGospel(0);
+
+showReflection(0);
+
+/* GROUP REFLECTION PAGE INDEX ADDITION */
+document
+    .querySelectorAll(".nav-links button")[8]
+    .setAttribute("data-page", "8");
+
+document
+    .querySelectorAll(".nav-links button")[9]
+    .setAttribute("data-page", "9");
+
+document
+    .querySelectorAll(".page")[8]
+    .querySelectorAll("button")
+    .forEach(function(button) {
+        if (button.textContent.trim() === "Continue to Closing →") {
+            button.setAttribute("onclick", "goToPage(9)");
+        }
+    });
+
+showGroupReflection(0);
+
+    updateNavigation();
+
+</script>
+</body>
+</html>
+

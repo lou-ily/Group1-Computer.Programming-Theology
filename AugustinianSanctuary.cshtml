@@ -1,0 +1,76 @@
+@page
+@model AugustinianSanctuary.AugustinianSanctuaryModel
+@{
+    Layout = null;
+    var myselfDare = AugustinianSanctuary.AugustinianSanctuaryModel.GetRandomDare(AugustinianSanctuary.DareCategory.Myself);
+    var othersDare = AugustinianSanctuary.AugustinianSanctuaryModel.GetRandomDare(AugustinianSanctuary.DareCategory.Others);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Augustinian Sanctuary</title>
+    <style>
+        body { margin: 0; font-family: Georgia, serif; background: #f8f5ef; color: #292d2b; }
+        main { max-width: 900px; margin: 0 auto; padding: 8vh 24px; }
+        section { background: white; padding: 32px; margin-bottom: 24px; border-radius: 18px; box-shadow: 0 8px 24px #00000012; }
+        h1, h2 { color: #536957; }
+        p { line-height: 1.7; }
+        .eyebrow { color: #c7a86b; text-transform: uppercase; letter-spacing: 2px; font: bold 12px Arial, sans-serif; }
+        .verse { font-size: 1.35rem; }
+        .dare { border-left: 3px solid #c7a86b; padding-left: 16px; margin: 16px 0; }
+        label { display: block; margin: 12px 0 6px; color: #536957; font-weight: bold; }
+        input, textarea { width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid #d4dad4; border-radius: 8px; font: inherit; }
+        textarea { min-height: 120px; }
+        button { margin-top: 16px; padding: 12px 18px; border: 0; border-radius: 20px; background: #536957; color: white; font-weight: bold; cursor: pointer; }
+        .message { color: #536957; }
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <div class="eyebrow">An Augustinian Sanctuary</div>
+            <h1>The Augustinian Sanctuary</h1>
+            <p>Explore faith, reflection, prayer, and acts of love through the journey of Saint Augustine.</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Today's Gospel</div>
+            <h2>@Model.DailyGospel.Reference</h2>
+            <p class="verse">“@Model.DailyGospel.Verse”</p>
+        </section>
+
+        <section>
+            <div class="eyebrow">Faith in Action</div>
+            <h2>Dares of Grace</h2>
+            <div class="dare">
+                <strong>For Myself: @myselfDare.Title</strong>
+                <p>@myselfDare.Description</p>
+            </div>
+            <div class="dare">
+                <strong>For Others: @othersDare.Title</strong>
+                <p>@othersDare.Description</p>
+            </div>
+        </section>
+
+        <section>
+            <div class="eyebrow">A Place to Pray</div>
+            <h2>Private Prayer Request</h2>
+            <form method="post" asp-page-handler="Prayer">
+                <label asp-for="Prayer.Name">Name</label>
+                <input asp-for="Prayer.Name" />
+                <span asp-validation-for="Prayer.Name"></span>
+                <label asp-for="Prayer.Request">Prayer Request</label>
+                <textarea asp-for="Prayer.Request"></textarea>
+                <span asp-validation-for="Prayer.Request"></span>
+                <button type="submit">Send Prayer Request</button>
+            </form>
+            @if (Model.PrayerMessage is not null)
+            {
+                <p class="message">@Model.PrayerMessage</p>
+            }
+        </section>
+    </main>
+</body>
+</html>
